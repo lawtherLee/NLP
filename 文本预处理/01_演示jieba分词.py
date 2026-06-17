@@ -177,7 +177,7 @@ def dm05():
     print(f'result1(精确模式分词): {result1}')
 
     # 3. 加载用户自定义词典.
-    jieba.load_userdict('./data/userdict.txt')
+    jieba.load_userdict('../data/userdict.txt')
     # 4. 执行加载自定义词典的分词.
     result2 = jieba.lcut(content)
     # 5. 打印结果.
@@ -189,6 +189,6 @@ if __name__ == '__main__':
     content = '传智教育是一家上市公司，旗下有黑马程序员品牌。我是在黑马这里学习人工智能'
     # dm01()
     # dm02()
-    dm03()
+    # dm03()
     # dm04()
-    # dm05()
+    dm05()
