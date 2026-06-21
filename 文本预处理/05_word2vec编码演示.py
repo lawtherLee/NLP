@@ -36,7 +36,7 @@ def dm01_train_save():
 # todo 2.定义函数, 实现: 加载模型, 并预测 -> 查看单词对应的词向量.
 def dm02_get_word_vector():
     # 1. 加载预训练的fastText模型.
-    model = fasttext.load_model('./model/gz03_fil9.bin')
+    model = fasttext.load_model('../model/gz03_fil9.bin')
     # 2. 获取单个词的 词向量形式(word2vec)
     results = model.get_word_vector('cat')
     print(f'type: {type(results)}')     # numpy数组
@@ -47,7 +47,7 @@ def dm02_get_word_vector():
 # todo 3.定义函数, 实现: 加载模型, 并预测 -> 查看单词的相似度(语义)
 def dm03_get_similarity():
     # 1. 加载预训练的fastText模型.
-    model = fasttext.load_model('./model/gz03_fil9.bin')
+    model = fasttext.load_model('../model/gz03_fil9.bin')
     # 2. 查找和 'dog' 语义最相近的一组单词, 默认: 10个.
     results = model.get_nearest_neighbors('dog')
     # 3. 打印结果.
@@ -63,7 +63,7 @@ def dm04_set_hyper_parameter():
 
     # 手动调整参数.
     my_model = fasttext.train_unsupervised(
-        input='./data/gz03aa',
+        input='../data/gz03aa',
         model='cbow',           # 词向量模型: cbow, skipgram
         dim=50,                 # 词向量维度
         epoch=1,                # 训练轮数
@@ -73,13 +73,13 @@ def dm04_set_hyper_parameter():
 
     # 2. 保存模型为 -> 二进制文件.
     # 后续可以通过 fasttext.load_model() 加载模型.
-    my_model.save_model('./model/gz03_fil9_new.bin')
+    my_model.save_model('../model/gz03_fil9_new.bin')
 
 
 
 # todo 5.测试
 if __name__ == '__main__':
-    dm01_train_save()
+    # dm01_train_save()
     # dm02_get_word_vector()
     # dm03_get_similarity()
-    # dm04_set_hyper_parameter()
+    dm04_set_hyper_parameter()
