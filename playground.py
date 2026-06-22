@@ -1,37 +1,36 @@
-import torch  # PyTorch深度学习框架
-from tensorflow.keras.preprocessing.text import Tokenizer  # 导入词汇映射器
-from torch.utils.tensorboard import SummaryWriter  # 可视化 词向量
-import jieba  # 导入分词器
-import torch.nn as nn  # 导入神经网络模块
+import jieba
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt  # 推荐 pip install matplotlib==3.9
+from itertools import chain  # 迭代器工具
+import jieba.posseg as pseg  # 词性标注(名词, 动词, 形容词..._
+from pandas.io.clipboard import paste
+from wordcloud import WordCloud  # 词云
 
-sentence1 = "传智教育是一家上市公司，旗下有黑马程序员品牌。我是在黑马这里学习人工智能"
-sentence2 = "我爱自然语言处理"
+plt.rcParams["font.sans-serif"] = ["SimHei"]
+plt.rcParams["axes.unicode_minus"] = False
 
-sentence = [sentence1, sentence2]
-# print(sentence)
-word_list = []
 
-for sentence in sentence:
-    word_list.append(list(jieba.cut(sentence)))
+def dm01_label_sns_counterpoint():
+    plt.style.use("fivethirtyeight")
 
-# print(word_list)
+    train_data = pd.read_csv("./data/train.tsv", sep="\t")
+    dev_data = pd.read_csv("./data/dev.tsv", sep="\t")
+    # print(f"train_data.head: {train_data.head()}")
+    # print(f"dev_data.head: {dev_data.head()}")
+    sns.countplot(x="label", data=train_data, hue="label", legend=False)
+    plt.title("train_label")
+    plt.show()
 
-my_tokenizer = Tokenizer()
-my_tokenizer.fit_on_texts(word_list)
 
-print(my_tokenizer.word_index)
+def dm02_len_sns_counterpoint_disappoint():
+    train_data = pd.read_csv("./data/train.tsv", sep="\t")
+    dev_data = pd.read_csv("./data/dev.tsv", sep="\t")
 
-my_token_list = my_tokenizer.word_index.values()
-print(my_token_list)
+    train_data["sentence_length"] = train_data["sentence"].apply(lambda x: len(x))
+    print(train_data.iloc[:, 2:])
 
-seq2id = my_tokenizer.texts_to_sequences(word_list)
 
-embed = nn.Embedding(len(my_token_list), 8)
-
-my_summary = SummaryWriter(log_dir="./runs")
-my_summary.add_embedding(embed.weight.data, my_token_list)
-
-for idx in range(len(my_tokenizer.word_index)):
-    temp_vec = embed(torch.tensor(idx))
-    word = my_tokenizer.index_word[idx + 1]
-    print(f"单词: {word}, 词向量: {temp_vec.detach().numpy()}")
+if __name__ == "__main__":
+    # dm01_label_sns_counterpoint()
+    dm02_len_sns_counterpoint_disappoint()
