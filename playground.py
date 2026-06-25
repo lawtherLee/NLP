@@ -1,36 +1,33 @@
-import jieba
-import seaborn as sns
-import pandas as pd
-import matplotlib.pyplot as plt  # 推荐 pip install matplotlib==3.9
-from itertools import chain  # 迭代器工具
-import jieba.posseg as pseg  # 词性标注(名词, 动词, 形容词..._
-from pandas.io.clipboard import paste
-from wordcloud import WordCloud  # 词云
+print("\n" + "=" * 40)
+print("演示 zip 配对")
+print("=" * 40)
 
-plt.rcParams["font.sans-serif"] = ["SimHei"]
-plt.rcParams["axes.unicode_minus"] = False
+list_a = [1, 3, 2, 1, 5, 3]
+list_b = [3, 2, 1, 5, 3]
 
+print(f"list_a: {list_a}")
+print(f"list_b: {list_b}")
+print()
 
-def dm01_label_sns_counterpoint():
-    plt.style.use("fivethirtyeight")
+# zip 把两个列表按位置一对一配对
+print("zip(list_a, list_b) 的结果:")
+for pair in zip(list_a, list_b):
+    print(f"  {pair}")
 
-    train_data = pd.read_csv("./data/train.tsv", sep="\t")
-    dev_data = pd.read_csv("./data/dev.tsv", sep="\t")
-    # print(f"train_data.head: {train_data.head()}")
-    # print(f"dev_data.head: {dev_data.head()}")
-    sns.countplot(x="label", data=train_data, hue="label", legend=False)
-    plt.title("train_label")
-    plt.show()
+print(f"\n转成列表: {list(zip(list_a, list_b))}")
+print()
 
+# 关键规则：以最短的列表为准！
+short = [1, 2, 3]
+long = [10, 20, 30, 40, 50]
+print(f"短列表: {short}")
+print(f"长列表: {long}")
+print(f"zip(短, 长): {list(zip(short, long))}")
+print("→ 只配出 3 对，40 和 50 被丢弃了")
+print()
 
-def dm02_len_sns_counterpoint_disappoint():
-    train_data = pd.read_csv("./data/train.tsv", sep="\t")
-    dev_data = pd.read_csv("./data/dev.tsv", sep="\t")
-
-    train_data["sentence_length"] = train_data["sentence"].apply(lambda x: len(x))
-    print(train_data.iloc[:, 2:])
-
-
-if __name__ == "__main__":
-    # dm01_label_sns_counterpoint()
-    dm02_len_sns_counterpoint_disappoint()
+# 三个列表也能 zip
+list_c = [100, 200, 300, 400]
+list_d = ["a", "b", "c", "d"]
+list_e = [True, False, True, False]
+print(f"三个列表配对: {list(zip(list_c, list_d, list_e))}")
